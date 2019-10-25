@@ -16,8 +16,6 @@ import java.util.Map;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
-import javax.inject.Inject;
-
 import org.desz.inttoword.exceptions.AppConversionException;
 import org.desz.inttoword.language.IntWordMapping;
 import org.desz.inttoword.language.ProvLang;
@@ -29,7 +27,6 @@ import org.springframework.stereotype.Component;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * @author des ConversionFunction: Function interface -> Integer to
@@ -78,7 +75,7 @@ public class IntToWordConverter implements RequestHandler<IntToWordRequest, Stri
 
 		final WordResult.Builder wordBuilder = new WordResult.Builder();
 
-		// build with UNIT added to each part if applicable.
+		// build with UNIT added to each part.
 		switch (sz) {
 		case 1:
 			// result returned.
@@ -143,43 +140,15 @@ public class IntToWordConverter implements RequestHandler<IntToWordRequest, Stri
 
 	}
 
-	/*
-	 * @Override public APIGatewayProxyResponseEvent
-	 * apply(APIGatewayProxyRequestEvent t) {
-	 * System.out.print("APIGatewayProxyRequestEvent" + t);
-	 * APIGatewayProxyResponseEvent resp = new APIGatewayProxyResponseEvent();
-	 * t.getHeaders().forEach(new BiConsumer<String, String>() {
-	 * 
-	 * @Override public void accept(String t, String u) {
-	 * System.out.println("header" + t + "-" + u);
-	 * 
-	 * }
-	 * 
-	 * }); System.out.print("body" + t.getBody()); try { IntToWordRequest req =
-	 * (IntToWordRequest) mapper.readValue(t.getBody(), IntToWordRequest.class);
-	 * System.out.print("IntToWordRequest" + req.toString()); String res =
-	 * this.convertIntToWord(req.getNumber(), ProvLang.valueOf(req.getLang()));
-	 * resp.setBody(res); resp.setStatusCode(200);
-	 * 
-	 * } catch (IOException e) { e.printStackTrace(); } catch
-	 * (AppConversionException e) { e.printStackTrace(); } return resp; }
-	 */
-
-	@Inject
-	ObjectMapper mapper;
-
 	@Override
 	public String handleRequest(IntToWordRequest input, Context context) {
 		LambdaLogger log = context.getLogger();
 		log.log(input.toString());
-		int num = input.getNumber();
-		ProvLang pl = ProvLang.valueOf(input.getLang());
 		String res = null;
 		try {
-			res = convertIntToWord(num, pl);
+			res = convertIntToWord(input.getNumber(), ProvLang.valueOf(input.getLang()));
 		} catch (AppConversionException e) {
 			log.log(e.getMessage());
-			e.printStackTrace();
 		}
 		return res;
 	}

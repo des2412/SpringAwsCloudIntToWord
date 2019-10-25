@@ -30,4 +30,16 @@ Create a test file, <test_file> with exemplary contents
 ```
 aws lambda invoke --function-name <function_name> --payload fileb://<test_file> response.txt
 ```
-response.txt will have the computation result.
+response.txt will have the result.
+
+E.g., for the exemplary case the computation result equals:-
+
+`dreiundzwanzig millionen undsiebzigundachthundertdreiunddreißigundsechshundert`
+
+### Important Note:
+
+`It is required to clone and install Clone URL dependency into Maven repository`
+
+### [Clone URL](https://github.com/des2412/IntToWordService.git)
+
+
