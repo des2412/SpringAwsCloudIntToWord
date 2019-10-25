@@ -5,6 +5,8 @@
 
 `IntToWordRequest` the input object has number and language fields
 
+`InttoWordConverter parameterisation: RequestHandler<IntToWordRequest, String>`
+
 
 ### Maven Build 
 Using command
