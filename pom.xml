@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.1.6.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.techprimers.serverless</groupId>
-	<artifactId>spring-cloud-function-example</artifactId>
+	<groupId>org.desz.aws.serverless</groupId>
+	<artifactId>spring-cloud-function-inttoword</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>spring-cloud-function-example</name>
-	<description>Demo project for Spring Boot with Spring  Cloud Function</description>
+	<name>spring-cloud-function</name>
+	<description>Convert integer to word SpringBoot / Cloud Function</description>
 
 	<properties>
 		<java.version>1.8</java.version>
@@ -20,6 +21,17 @@
 	</properties>
 
 	<dependencies>
+
+		<dependency>
+			<groupId>org.desz.conversion</groupId>
+			<artifactId>inttoword</artifactId>
+			<version>1.0-springboot</version>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<scope>provided</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-function-adapter-aws</artifactId>
@@ -40,8 +52,14 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-	</dependencies>
+		<!-- https://mvnrepository.com/artifact/com.amazonaws/aws-lambda-java-events -->
+		<dependency>
+			<groupId>com.amazonaws</groupId>
+			<artifactId>aws-lambda-java-events</artifactId>
+			<version>2.0.2</version>
+		</dependency>
 
+	</dependencies>
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -75,6 +93,10 @@
 					<shadedArtifactAttached>true</shadedArtifactAttached>
 					<shadedClassifierName>aws</shadedClassifierName>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
 			</plugin>
 		</plugins>
 	</build>

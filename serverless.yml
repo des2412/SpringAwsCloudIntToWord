@@ -1,0 +1,12 @@
+service: sls-aws-java-spring-cloud-function-demo
+provider:
+  name: aws
+  runtime: java8
+  timeout: 30
+package:
+  artifact: target/spring-cloud-function-inttoword-0.0.1-SNAPSHOT-aws.jar
+functions:
+  members:
+    handler: org.desz.serverless.functions.IntToWordConverter
+    
+    
