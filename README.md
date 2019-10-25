@@ -1,11 +1,31 @@
-# Spring Cloud Function using AWS Adapter example
+# Spring Cloud Function: SpringAwsCloudIntToWord using AWS Adapter
 
 ## Exposed Function as API Endpoint using AWS API Gateway
-`Hello.java` is exposed as function to the AWS Request Handler using `SpringBootRequestHandler`.
-`APIGatewayProxyRequestEvent` is the input object and `APIGatewayProxyResponseEvent` is the response object.
+`IntToWordConverter.java` is exposed as function to the AWS Request Handler using `SpringBootRequestHandler`. The response object is a String.
 
-### Command used:
+`IntToWordRequest` the input object has number and language fields
 
+
+### Maven Build 
+Using command
+`mvn package`
+
+### Create the Lambda
+
+Create the Lambda Function <function_name> using AWS Lambda Management console. 
+
+###  Deployment
+Upload the jar named 
+`spring-cloud-function-inttoword-0.0.1-SNAPSHOT-aws.jar`
+
+### Test
+
+Create a test file, <test_file> with exemplary contents
+
+```{"number": 23873636, "lang": "DE"} ```
+
+### Send the request 
 ```
-curl -X POST -H 'Content-Type: text/plain' <API_GATEWAY_URL> -d 'TechPrimers' -i
+aws lambda invoke --function-name <function_name> --payload fileb://<test_file> response.txt
 ```
+response.txt will have the computation result.
