@@ -27,7 +27,7 @@ public class HundredthConverter implements IHundConverter {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.desz.inttoword.conv.IHundConverter#mapToWord(java.lang.String,
+	 * @see org.desz.inttoword.converters.IHundConverter#mapToWord(java.lang.String,
 	 * org.desz.inttoword.language.IntWordMapping)
 	 */
 	@Override

@@ -1,6 +1,7 @@
 package org.desz.serverless.functions;
 
 import static java.util.Arrays.asList;
+import static java.util.Locale.UK;
 import static java.util.Objects.nonNull;
 import static java.util.Objects.requireNonNull;
 import static java.util.stream.Collectors.toMap;
@@ -11,16 +12,15 @@ import static org.desz.inttoword.factory.ProvLangFactory.getInstance;
 
 import java.text.NumberFormat;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.function.BiFunction;
-import java.util.function.Function;
+import static java.util.function.Function.identity;
 
 import org.desz.inttoword.exceptions.AppConversionException;
 import org.desz.inttoword.language.IntWordMapping;
 import org.desz.inttoword.language.ProvLang;
-import org.desz.inttoword.output.DeDecorator;
-import org.desz.inttoword.output.WordResult;
+import org.desz.inttoword.results.DeDecorator;
+import org.desz.inttoword.results.WordResult;
 import org.desz.serverless.pojo.IntToWordRequest;
 import org.springframework.stereotype.Component;
 
@@ -37,6 +37,7 @@ import com.amazonaws.services.lambda.runtime.RequestHandler;
 public class IntToWordConverter implements RequestHandler<IntToWordRequest, String> {
 
 	private IHundConverter hundredthConverter = new HundredthConverter();
+	private static final NumberFormat nf = NumberFormat.getIntegerInstance(UK);
 
 	public IntToWordConverter() {
 
@@ -58,11 +59,11 @@ public class IntToWordConverter implements RequestHandler<IntToWordRequest, Stri
 
 	public String convertIntToWord(Integer n, ProvLang pl) throws AppConversionException {
 
-		n = requireNonNull(n, "Integer parameter required to be non-null");
+		n = requireNonNull(n, "Integer parameter null");
 		final ProvLang provLang = requireNonNull(pl);
 		if (provLang.equals(ProvLang.EMPTY))
 			throw new AppConversionException();
-		final List<String> numUnits = asList(NumberFormat.getIntegerInstance(Locale.UK).format(n).split(","));
+		final List<String> numUnits = asList(nf.format(n).split(","));
 		DeDecorator deDecorator = null;
 		final int sz = numUnits.size();
 		// save last element of numUnits..
@@ -71,7 +72,7 @@ public class IntToWordConverter implements RequestHandler<IntToWordRequest, Stri
 		final IntWordMapping langMap = getInstance().getMapForProvLang(provLang);
 		// convert each hundredth to word.
 		final Map<Integer, String> wordMap = range(0, sz).boxed()
-				.collect(toMap(Function.identity(), i -> funcHunConv.apply(numUnits.get(i), langMap)));
+				.collect(toMap(identity(), i -> funcHunConv.apply(numUnits.get(i), langMap)));
 
 		final WordResult.Builder wordBuilder = new WordResult.Builder();
 
@@ -80,9 +81,10 @@ public class IntToWordConverter implements RequestHandler<IntToWordRequest, Stri
 		case 1:
 			// result returned.
 			if (provLang.equals(ProvLang.DE)) {
-				WordResult deRes = wordBuilder.withHund(wordMap.get(0)).build();
-				deRes = new DeDecorator(deRes).restructureHundrethRule();
-				return new DeDecorator(deRes).pluraliseOneRule(prmLastHun).toString();
+				WordResult deWordResult = wordBuilder.withHund(wordMap.get(0)).build();
+
+				return new DeDecorator(new DeDecorator(deWordResult).restructureHundrethRule()).pluraliseOneRule(prmLastHun)
+						.toString();
 
 			}
 			return wordMap.get(0);
@@ -124,15 +126,15 @@ public class IntToWordConverter implements RequestHandler<IntToWordRequest, Stri
 			if (nonNull(wordResult.getHund()))
 				deBuilder.withHund(wordMap.get(sz - 1));
 			deDecorator = new DeDecorator(deBuilder.build());
-			WordResult deRes = deDecorator.pluraliseUnitRule();
-			deDecorator = new DeDecorator(deRes);
-			deRes = deDecorator.pluraliseOneRule(prmLastHun);
-			deDecorator = new DeDecorator(deRes);
-			deRes = deDecorator.restructureHundrethRule();
-			deDecorator = new DeDecorator(deRes);
-			deRes = deDecorator.combineThouHundRule();
+			WordResult deWordRes = deDecorator.pluraliseUnitRule();
+			deDecorator = new DeDecorator(deWordRes);
+			deWordRes = deDecorator.pluraliseOneRule(prmLastHun);
+			deDecorator = new DeDecorator(deWordRes);
+			deWordRes = deDecorator.restructureHundrethRule();
+			deDecorator = new DeDecorator(deWordRes);
+			deWordRes = deDecorator.combineThouHundRule();
 			// trim, multi to single whitespace.
-			return normalizeSpace(deRes.toString());
+			return normalizeSpace(deWordRes.toString());
 
 		}
 
