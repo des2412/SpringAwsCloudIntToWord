@@ -20,9 +20,13 @@ Create the Lambda Function <function_name> using AWS Lambda Management console.
 Upload the jar named 
 `spring-cloud-function-inttoword-0.0.1-SNAPSHOT-aws.jar`
 
-### Test
+### Test with curl
 
-Create a test file, <test_file> with exemplary contents
+```curl -d '{"number": 23873636, "lang": "DE"}' -H "Content-Type: application/json" -X POST https://8jy0qkpypj.execute-api.us-east-1.amazonaws.com/prod/spring-cloud-function-lambda```
+
+### Test with aws lambda
+
+Create a test file, <test_file> with exemplary JSON format contents
 
 ```{"number": 23873636, "lang": "DE"} ```
 
@@ -36,10 +40,12 @@ E.g., for the exemplary case the computation result equals:-
 
 `dreiundzwanzig millionen undsiebzigundachthundertdreiunddreißigundsechshundert`
 
-### Important Note:
+### Important Notes:
 
-`It is required to clone and install Clone URL dependency into Maven repository`
+`It is necessary to clone and install the IntegerToWordService dependency into Maven repository`
 
-### [Clone URL](https://github.com/des2412/IntToWordService.git)
+### [Dependency Clone URL](https://github.com/des2412/IntToWordService.git)
+
+`IntToWordService converts any positive number in the range [0-Integer.MAX] for a lang in the set [NL, UK, DE, FR]`
 
 
