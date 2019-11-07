@@ -11,41 +11,28 @@
 ### Maven Build 
 Using command
 `mvn package`
+ to build `spring-cloud-function-inttoword-0.0.1-SNAPSHOT-aws.jar`
 
 ### Create the Lambda
 
-Create the Lambda Function <function_name> using AWS Lambda Management console. 
+`aws lambda create-function --function-name "awslambdainttoword" --runtime "openjdk11" --role "arn:aws:iam::142532442303:role/myservice-dev-us-east-1-lambdaRole" --handler "org.desz.serverless.functions.IntToWordConverter" --timeout 5 --memory-size 256 --zip-file "fileb://target/spring-cloud-function-inttoword-0.0.1-SNAPSHOT-aws.jar"`
 
-###  Deployment
-Upload the jar named 
-`spring-cloud-function-inttoword-0.0.1-SNAPSHOT-aws.jar`
 
-### Test with curl
 
-```curl -d '{"number": 23873636, "lang": "DE"}' -H "Content-Type: application/json" -X POST https://8jy0qkpypj.execute-api.us-east-1.amazonaws.com/prod/spring-cloud-function-lambda```
 
-### Test with aws lambda
+### Test API Gateway
 
-Create a test file, <test_file> with exemplary JSON format contents
+'awslambdainttoword' function is now deployed and an API has been deployed at URL:-
+[Api Gateway](https://ilrl508i9l.execute-api.eu-west-2.amazonaws.com/dev)
 
-```{"number": 23873636, "lang": "DE"} ```
+`curl -d '{"number": 23873636, "lang": "DE"}' -H "Content-Type: application/json" -X POST https://ilrl508i9l.execute-api.eu-west-2.amazonaws.com/dev`
 
-### Send the request 
-```
-aws lambda invoke --function-name <function_name> --payload fileb://<test_file> response.txt
-```
-response.txt will have the result.
+returns response
 
-E.g., for the exemplary case the computation result equals:-
+`dreiundzwanzig Millionen achthundertdreiundsiebzigtausendsechshundertsechsunddreißig`
 
-`dreiundzwanzig millionen undsiebzigundachthundertdreiunddreißigundsechshundert`
+### Notes:
 
-### Important Notes:
-
-`It is necessary to clone and install the IntegerToWordService dependency into Maven repository`
-
-### [Dependency Clone URL](https://github.com/des2412/IntToWordService.git)
-
-`IntToWordService converts any positive number in the range [0-Integer.MAX] for a lang in the set [NL, UK, DE, FR]`
+`IntToWordService dependency converts any positive parameter ['number'] in the range [0-Integer.MAX] for parameter ['lang'] in set [NL, UK, DE, FR]. It is available on JitPack.io.`
 
 

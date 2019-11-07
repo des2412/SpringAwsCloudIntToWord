@@ -12,7 +12,7 @@ phases:
     - apt-get install -y maven
   build:
     commands:
-    - echo building the justiceleague-tracker
+    - echo building inttoword converter
     - mvn install
 artifacts:
   files:

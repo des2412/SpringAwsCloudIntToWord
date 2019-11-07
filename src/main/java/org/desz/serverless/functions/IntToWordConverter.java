@@ -33,7 +33,7 @@ public class IntToWordConverter implements RequestHandler<IntToWordRequest, Stri
 	@Override
 	public String handleRequest(IntToWordRequest input, Context context) {
 		LambdaLogger log = context.getLogger();
-		log.log(input.toString());
+		log.log("lambda function input:" + input.toString());
 		String res = null;
 		try {
 			res = conversionDelegate.convertIntToWord(input.getNumber(), valueOf(input.getLang()));
