@@ -15,10 +15,22 @@ Using command
 
 ### Create the Lambda
 
-`aws lambda create-function --function-name "awslambdainttoword" --runtime "openjdk11" --role "arn:aws:iam::142532442303:role/myservice-dev-us-east-1-lambdaRole" --handler "org.desz.serverless.functions.IntToWordConverter" --timeout 5 --memory-size 256 --zip-file "fileb://target/spring-cloud-function-inttoword-0.0.1-SNAPSHOT-aws.jar"`
+`aws lambda create-function` \
+`--function-name "awslambdainttoword"`\
+`--runtime "openjdk11"` \
+`--role "arn:aws:iam::142532442303:role/myservice-dev-us-east-1-lambdaRole"`\
+`--handler "org.desz.serverless.functions.IntToWordConverter"`\
+` --timeout 5`\
+` --memory-size 256`\
+` --zip-file "fileb://target/spring-cloud-function-inttoword-0.0.1-SNAPSHOT-aws.jar"`
 
 
+`role must be created for IAM user with permissions policies`
 
+ `-AWSLambdaFullAccess` \
+`-AmazonAPIGatewayInvokeFullAccess`\
+ `-AmazonAPIGatewayAdministrator`\
+ `-AWSLambdaExecute`
 
 ### Test API Gateway
 
