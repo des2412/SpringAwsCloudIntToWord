@@ -19,11 +19,9 @@ import com.amazonaws.services.lambda.runtime.RequestHandler;
 @Component
 public class IntToWordConverter implements RequestHandler<IntToWordRequest, String> {
 
-	private static IHundConverter hundredthConverter;
 	private static ConversionDelegate conversionDelegate;
 	static {
-		hundredthConverter = new HundredthConverter();
-		conversionDelegate = new ConversionDelegate(hundredthConverter);
+		conversionDelegate = new ConversionDelegate(new HundredthConverter());
 	}
 
 	public IntToWordConverter() {
@@ -39,6 +37,7 @@ public class IntToWordConverter implements RequestHandler<IntToWordRequest, Stri
 			res = conversionDelegate.convertIntToWord(input.getNumber(), valueOf(input.getLang()));
 		} catch (AppConversionException e) {
 			log.log(e.getMessage());
+			res = "Conversion failed";
 		}
 		return res;
 	}
