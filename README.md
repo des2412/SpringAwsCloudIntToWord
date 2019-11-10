@@ -5,7 +5,7 @@
 
 `IntToWordRequest` models the request object.
 
-Response and request are JSON.
+Response and request are JSON formatted.
 
 `InttoWordConverter parameterisation: RequestHandler<IntToWordRequest, String>`
 
