@@ -1,10 +1,11 @@
 package org.desz.serverless.functions;
 
+import static org.desz.inttoword.language.ProvLang.valueOf;
+
 import org.desz.inttoword.converters.ConversionDelegate;
 import org.desz.inttoword.converters.HundredthConverter;
-import org.desz.inttoword.converters.IHundConverter;
+import org.desz.inttoword.converters.NumberFormatValidator;
 import org.desz.inttoword.exceptions.AppConversionException;
-import static org.desz.inttoword.language.ProvLang.valueOf;
 import org.desz.serverless.pojo.IntToWordRequest;
 import org.springframework.stereotype.Component;
 
@@ -22,6 +23,7 @@ public class IntToWordConverter implements RequestHandler<IntToWordRequest, Stri
 	private static ConversionDelegate conversionDelegate;
 	static {
 		conversionDelegate = new ConversionDelegate(new HundredthConverter());
+		conversionDelegate.setNumberFormatValidator(NumberFormatValidator.getInstance());
 	}
 
 	public IntToWordConverter() {

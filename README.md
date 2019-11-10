@@ -3,15 +3,14 @@
 ## Exposed Function as API Endpoint using AWS API Gateway
 `IntToWordConverter.java` is exposed as function to the AWS Request Handler using `SpringBootRequestHandler`. The response object is a String.
 
-`IntToWordRequest` the input object has number and language fields
+`IntToWordRequest` models the request object.
 
 `InttoWordConverter parameterisation: RequestHandler<IntToWordRequest, String>`
 
 
 ### Maven Build 
-Using command
-`mvn package`
- to build `spring-cloud-function-inttoword-0.0.1-SNAPSHOT-aws.jar`
+
+`mvn package` generates artifact `spring-cloud-function-inttoword-0.0.1-SNAPSHOT-aws.jar`
 
 ### Create the Lambda
 
@@ -32,18 +31,18 @@ Using command
  `-AmazonAPIGatewayAdministrator`\
  `-AWSLambdaExecute`
 
-### Test API Gateway
+### API Gateway
 
-'awslambdainttoword' function is now deployed and an API has been deployed at URL:-
-[Api Gateway](https://ilrl508i9l.execute-api.eu-west-2.amazonaws.com/dev)
+ `API Gateway resource `
+[https://master.d18teuogf78dgr.amplifyapp.com/](https://master.d18teuogf78dgr.amplifyapp.com/)
 
-`curl -d '{"number": 23873636, "lang": "DE"}' -H "Content-Type: application/json" -X POST https://ilrl508i9l.execute-api.eu-west-2.amazonaws.com/dev`
-
+`curl -d '{"number": 23873636, "lang": "DE"}' -H "Content-Type: application/json" -X POST https://dvmkfdwpb1.execute-api.us-east-2.amazonaws.com/dev/conversion
+`
 returns response
 
 `dreiundzwanzig Millionen achthundertdreiundsiebzigtausendsechshundertsechsunddreißig`
 
-### Notes:
+### Notes
 
 `IntToWordService dependency converts any positive parameter ['number'] in the range [0-Integer.MAX] for parameter ['lang'] in set [NL, UK, DE, FR]. It is available on JitPack.io.`
 
