@@ -1,14 +1,18 @@
 # Spring Cloud Function: SpringAwsCloudIntToWord using AWS Adapter
 
 ## Exposed Function as API Endpoint using AWS API Gateway
-`IntToWordConverter.java` is exposed as function to the AWS Request Handler using `SpringBootRequestHandler`. 
+
+## Synopsis
+
+`IntToWordConverter` is the handler that is referenced by AWS Lambda function named awslambdainttoword. 
 
 `Response and request are JSON formatted.`
 
 `IntToWordRequest` models the request object.
 
-`InttoWordConverter parameterisation: RequestHandler<IntToWordRequest, String>`
+`IntToWordConverter` delegates the conversion process to component named `ConversionDelegate`.
 
+Coded to Java 13 specification.
 
 ### Maven Build 
 
