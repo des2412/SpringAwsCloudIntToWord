@@ -32,7 +32,7 @@
 		<dependency>
 			<groupId>com.github.des2412</groupId>
 			<artifactId>IntToWordService</artifactId>
-			<version>release-validn</version>
+			<version>release-5.0.1</version>
 		</dependency>
 
 		<dependency>

@@ -10,9 +10,9 @@
 
 `IntToWordRequest` models the request object.
 
-`IntToWordConverter` delegates the conversion process to component named `ConversionDelegate`.
+`IntToWordConverter` delegates to component `ConversionDelegate`.
 
-Coded to Java 13 specification.
+Compliant with Java 8 specification.
 
 ### Maven Build 
 
@@ -39,6 +39,8 @@ Coded to Java 13 specification.
 
 ### API Gateway
 
+Typescript React front application presents a simple front end demonstrating usage of the conversion API.
+
  `API Gateway resource `
 [https://master.d18teuogf78dgr.amplifyapp.com/](https://master.d18teuogf78dgr.amplifyapp.com/)
 
@@ -50,6 +52,6 @@ returns response
 
 ### Notes
 
-`IntToWordService dependency converts any positive parameter ['number'] in the range [0-Integer.MAX] for parameter ['lang'] in set [NL, UK, DE, FR]. It is available on JitPack.io.`
+`IntToWordService dependency converts any positive parameter ['number'] in the range [0-Long.MAX] for parameter ['lang'] in set [NL, UK, DE, FR]. It is available on JitPack.io.`
 
 
