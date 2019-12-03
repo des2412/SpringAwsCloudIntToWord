@@ -1,9 +1,11 @@
 package org.desz.serverless.functions;
 
+import static java.util.Objects.isNull;
 import static org.desz.inttoword.language.ProvLang.valueOf;
 
+import java.util.Random;
+
 import org.desz.inttoword.converters.ConversionDelegate;
-import org.desz.inttoword.converters.LongToWordBuilder;
 import org.desz.inttoword.exceptions.AppConversionException;
 import org.desz.serverless.pojo.IntToWordRequest;
 import org.springframework.stereotype.Component;
@@ -21,20 +23,30 @@ public class IntToWordConverter implements RequestHandler<IntToWordRequest, Stri
 
 	private static ConversionDelegate conversionDelegate;
 	static {
-		conversionDelegate = new ConversionDelegate(new LongToWordBuilder());
+		conversionDelegate = new ConversionDelegate();
 	}
 
 	public IntToWordConverter() {
 
 	}
+	
+	public long getRandom() {
+		final long l = new Random().nextLong();
+		return  l >= 0 ? l : getRandom();
+	}
 
 	@Override
 	public String handleRequest(IntToWordRequest input, Context context) {
 		LambdaLogger log = context.getLogger();
-		log.log("lambda function input:" + input.toString());
+		//log.log("lambda function input:" + input.toString());
 		String res = null;
 		try {
-			res = conversionDelegate.convertIntToWord(input.getNumber(), valueOf(input.getLang()));
+			// if n null generate random long.
+
+			long n = isNull(input.getNumber()) ? getRandom() : input.getNumber();
+			System.out.println("long value:" + n);
+			//log.log("long value:" + n);
+			res = conversionDelegate.convertIntToWord(n, valueOf(input.getLang()));
 		} catch (AppConversionException e) {
 			log.log(e.getMessage());
 			res = "Conversion failed";

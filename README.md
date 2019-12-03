@@ -1,6 +1,4 @@
-# Spring Cloud Function: SpringAwsCloudIntToWord using AWS Adapter
-
-## Exposed Function as API Endpoint using AWS API Gateway
+# Spring Cloud Function: SpringAwsCloudIntToWord access through API Gateway
 
 ## Synopsis
 
@@ -18,7 +16,8 @@ Compliant with Java 8 specification.
 
 `mvn package` generates artifact `spring-cloud-function-inttoword-0.0.1-SNAPSHOT-aws.jar`
 
-### Create the Lambda
+### Lambda Function Creation in AWS
+
 
 `aws lambda create-function` \
 `--function-name "awslambdainttoword"`\
@@ -36,22 +35,27 @@ Compliant with Java 8 specification.
 `-AmazonAPIGatewayInvokeFullAccess`\
  `-AmazonAPIGatewayAdministrator`\
  `-AWSLambdaExecute`
+ 
+### AWS Amplify
+
+A Typescript React application has been deployed.
+
+ `API Gateway resource`
+[https://master.d18teuogf78dgr.amplifyapp.com/](https://master.d18teuogf78dgr.amplifyapp.com/)
 
 ### API Gateway
 
-Typescript React front application presents a simple front end demonstrating usage of the conversion API.
 
- `API Gateway resource `
-[https://master.d18teuogf78dgr.amplifyapp.com/](https://master.d18teuogf78dgr.amplifyapp.com/)
+It can also be tested in using curl, i.e.,
 
 `curl -d '{"number": 23873636, "lang": "DE"}' -H "Content-Type: application/json" -X POST https://dvmkfdwpb1.execute-api.us-east-2.amazonaws.com/dev/conversion
 `
-returns response
+The above command returns response
 
 `dreiundzwanzig Millionen achthundertdreiundsiebzigtausendsechshundertsechsunddreißig`
 
 ### Notes
 
-`IntToWordService dependency converts any positive parameter ['number'] in the range [0-Long.MAX] for parameter ['lang'] in set [NL, UK, DE, FR]. It is available on JitPack.io.`
+`IntToWordService dependency converts any positive parameter ['number'] in the range [0-Long.MAX] for parameter ['lang' - NL, UK, DE, FR]. It is available on JitPack.io.`
 
 
